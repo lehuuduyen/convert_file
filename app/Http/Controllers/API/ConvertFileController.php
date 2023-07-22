@@ -16,7 +16,7 @@ class ConvertFileController extends Controller
     public function index()
     {
         $object = new stdClass;
-        $object->first = "Hello";
+        $object->version = phpversion();
         return response()->json($object);
     }
 
