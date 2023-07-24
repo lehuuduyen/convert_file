@@ -1,5 +1,14 @@
 body main {
-    max-width: 90%;
+    max-width: 100%;
+}
+
+.uk-section-xsmall {
+    padding-top: 20px;
+    padding-bottom: 20px
+}
+
+.uk-text-center {
+    text-align: center !important;
 }
 
 div {
@@ -36,6 +45,7 @@ div {
     margin-right: auto;
     flex-grow: 1;
     display: inherit;
+    border: none;
 }
 
 .dropzone button {
@@ -48,12 +58,33 @@ div {
     color: #fff;
 }
 
+.uk-button:hover {
+    text-decoration: none;
+}
+
+.uk-button-primary:focus,
+.uk-button-primary:hover {
+    background-color: #0f7ae5;
+    color: #fff;
+}
+
 .uk-button:not(:disabled) {
     cursor: pointer;
 }
 
-.uk-button-primary {
+.choose-button:hover, .convert-button:hover {
+    background-color: #5e0000;
+}
+/* .uk-button-primary {
+    background-color: #1e87f0;
+    color: #fff;
     border: 1px solid transparent;
+} */
+
+::selection {
+    background: #39f;
+    color: #fff;
+    text-shadow: none;
 }
 
 .uk-button {
@@ -61,7 +92,6 @@ div {
     border: none;
     overflow: visible;
     font: inherit;
-    color: inherit;
     text-transform: none;
     -webkit-appearance: none;
     border-radius: 0;
