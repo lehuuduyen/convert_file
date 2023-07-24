@@ -26,6 +26,9 @@
                                 Chọn tệp hoặc kéo và thả chúng vào đây.
                             </p>
                         </div>
+                        <div class="action-bottom">
+                            <p class="uk-text-center"></p>
+                        </div>
                     </div>
                 </div>
             </div>
