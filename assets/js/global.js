@@ -1,4 +1,5 @@
 jQuery(document).ready(function () {
+    const listConverter = ['3gp', '7z', 'ai', 'avi', 'bmp', 'cur', 'dds', 'djvu', 'doc', 'docx', 'dot', 'dst', 'dwg', 'dxf', 'emf', 'eps', 'epub', 'exr', 'fig', 'gif', 'h265', 'hdr', 'heic', 'html', 'ico', 'jpe', 'jpeg', 'map', 'mkv', 'mobi', 'mov', 'mp4', 'mpeg', 'mpg', 'obj', 'odt', 'pbm', 'pcx', 'pdf', 'pgm', 'plt', 'png', 'pnm', 'ppm', 'ps', 'psb', 'psd', 'rar', 'rgb', 'rtf', 'sk', 'stl', 'sun', 'svg', 'tga', 'tif', 'tiff', 'webp', 'wmf', 'wmv', 'xmp', 'xps', 'zip'];
     var clickedInsideDiv = false;
 
     jQuery('#uploadFile').click(function () {
@@ -57,10 +58,12 @@ jQuery(document).ready(function () {
                             <div class="file-name">${item.name}</div>
                             <div class="file-format-to">sang</div>
                             <div class="file-format-to">
-                                <select id="formatList">
-                                    <option value="ico">ICO</option>
-                                    <option></option>
-                                </select>
+                                <div class="form-group search">
+                                    <select class="selectpicker" data-live-search="true">
+                                        ${getListOptionConverter(listConverter)}
+                                    </select>
+                                </div>
+                                
                             </div>
                             <div class="file-delete">
                                 <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 12 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
@@ -78,5 +81,15 @@ jQuery(document).ready(function () {
         var buttonChuyenDoi = '<button class="convert-button uk-button uk-button-primary">Chuyển đổi</button>';
         jQuery(".action-bottom .uk-text-center").append(buttonChuyenDoi);
 
+        jQuery('.search select').selectpicker({
+            size: false,
+        });
     }
-})
+});
+function getListOptionConverter(list) {
+    var option = "";
+    jQuery.each(list, function (index, item) {
+        option += `<option value="${item}">${item.toUpperCase()}</option>`;
+    });
+    return option;
+}
