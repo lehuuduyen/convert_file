@@ -3,7 +3,7 @@ $request = $_SERVER['REQUEST_URI'];
 $path = str_replace('/',"",$request);
 
 switch ($path) {
-    case '':
+    case 'index.php':
         # code...
         break;
     case "jpg-converter":
@@ -97,7 +97,6 @@ switch ($path) {
     case "3ds-converter":
         break;
     default:
-        # code...
         require('404.html');
         die;
         break;

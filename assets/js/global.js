@@ -1,46 +1,58 @@
 jQuery(document).ready(function () {
-    const listConverter = ['3gp', '7z', 'ai', 'avi', 'bmp', 'cur', 'dds', 'djvu', 'doc', 'docx', 'dot', 'dst', 'dwg', 'dxf', 'emf', 'eps', 'epub', 'exr', 'fig', 'gif', 'h265', 'hdr', 'heic', 'html', 'ico', 'jpe', 'jpeg', 'map', 'mkv', 'mobi', 'mov', 'mp4', 'mpeg', 'mpg', 'obj', 'odt', 'pbm', 'pcx', 'pdf', 'pgm', 'plt', 'png', 'pnm', 'ppm', 'ps', 'psb', 'psd', 'rar', 'rgb', 'rtf', 'sk', 'stl', 'sun', 'svg', 'tga', 'tif', 'tiff', 'webp', 'wmf', 'wmv', 'xmp', 'xps', 'zip'];
-    var clickedInsideDiv = false;
-
-    jQuery('#uploadFile').click(function () {
-        if (!clickedInsideDiv) {
-            clickedInsideDiv = true;
-            jQuery(this).find('input[type="file"]').click();
+    var listConvertByFile = {};
+    (async function () {
+        try {
+            listConvertByFile = await getListConverterByFile();
+        } catch (error) {
+            console.error(error);
         }
+    })();
 
-    });
+    triggerUploadFile();
 
-    jQuery('#uploadFile input[type="file"]').click(function (event) {
-        event.stopPropagation();
-        var target = event.target || event.srcElement;
-        if (target.value.length == 0) {
-            clickedInsideDiv = false;
-        } else {
-            clickedInsideDiv = false;
-            displayFile(this.files);
-        }
-    });
+    function triggerUploadFile() {
+        var clickedInsideDiv = false;
 
-    jQuery('#uploadFile input[type="file"]').change(function (event) {
-        var target = event.target || event.srcElement;
-        if (target.value.length == 0) {
-            clickedInsideDiv = false;
-        } else {
-            clickedInsideDiv = false;
-            displayFile(this.files);
-        }
+        jQuery('#uploadFile').click(function () {
+            if (!clickedInsideDiv) {
+                clickedInsideDiv = true;
+                jQuery(this).find('input[type="file"]').click();
+            }
 
-    });
-    jQuery('#uploadFile input[type="file"]').blur(function (event) {
-        var target = event.target || event.srcElement;
-        if (target.value.length == 0) {
-            clickedInsideDiv = false;
-        } else {
-            clickedInsideDiv = false;
-            displayFile(this.files);
-        }
-    });
+        });
 
+        jQuery('#uploadFile input[type="file"]').click(function (event) {
+            event.stopPropagation();
+            var target = event.target || event.srcElement;
+            if (target.value.length == 0) {
+                clickedInsideDiv = false;
+            } else {
+                clickedInsideDiv = false;
+                displayFile(this.files);
+            }
+        });
+
+        jQuery('#uploadFile input[type="file"]').change(function (event) {
+            var target = event.target || event.srcElement;
+            if (target.value.length == 0) {
+                clickedInsideDiv = false;
+            } else {
+                clickedInsideDiv = false;
+                displayFile(this.files);
+            }
+
+        });
+        jQuery('#uploadFile input[type="file"]').blur(function (event) {
+            var target = event.target || event.srcElement;
+            if (target.value.length == 0) {
+                clickedInsideDiv = false;
+            } else {
+                clickedInsideDiv = false;
+                displayFile(this.files);
+            }
+        });
+
+    }
     function displayFile(files) {
         jQuery('div#uploadFile').remove();
         var listHTML = "<div class='files-list'>";
@@ -59,8 +71,8 @@ jQuery(document).ready(function () {
                             <div class="file-format-to">sang</div>
                             <div class="file-format-to">
                                 <div class="form-group search">
-                                    <select class="selectpicker" data-live-search="true">
-                                        ${getListOptionConverter(listConverter)}
+                                    <select class="selectpicker select-search-box" data-live-search="true" style="display: none;">
+                                        ${getListOptionConverter(listConvertByFile, dataType)}
                                     </select>
                                 </div>
                                 
@@ -79,17 +91,127 @@ jQuery(document).ready(function () {
 
         // Append the button Chuyen Doi
         var buttonChuyenDoi = '<button class="convert-button uk-button uk-button-primary">Chuyển đổi</button>';
+        var htmlChonTep = `<div tabindex="0" class="dropzone" id="uploadFile">
+                                <input type="file" tabindex="-1" multiple autocomplete="off" style="display: none;">
+                                <div class="btn">
+                                    <button class="uk-button uk-button-primary choose-button">Chọn tệp</button>
+                                </div>
+                                <p class="uk-text-center">
+                                    Chọn tệp hoặc kéo và thả chúng vào đây.
+                                </p>
+                            </div>`;
+
         jQuery(".action-bottom .uk-text-center").append(buttonChuyenDoi);
 
         jQuery('.search select').selectpicker({
             size: false,
         });
+
+        // Delete File
+        jQuery('.file-delete').click(function () {
+            jQuery(this).parent().remove();
+            if (jQuery(".file").length == 0) {
+                jQuery('div.files-list').remove();
+                jQuery('button.convert-button').remove();
+                jQuery(".upload-container-form").prepend(htmlChonTep);
+                triggerUploadFile();
+            }
+        });
+
+        // Convert button
+        jQuery('.convert-button').click(function () {
+            jQuery.each(files, function (index, item) {
+                var formDataPost = new FormData();
+                console.log(index)
+                var randomString = generateRandomString(32);
+                var valueConvertTo = jQuery("select.select-search-box").eq(index).val();
+                var urlUpload = "https://anyconv.com/api/action/add/" + randomString + "/";
+                formDataPost.append("file", item, item.name);
+                formDataPost.append("to", valueConvertTo);
+                var settingsUploadConvert = {
+                    "url": urlUpload,
+                    "method": "POST",
+                    "processData": false,
+                    "mimeType": "multipart/form-data",
+                    "contentType": false,
+                    "data": formDataPost
+                };
+                jQuery.ajax(settingsUploadConvert).done(function (response) {
+                    // console.log(response);
+                    // var urlUploadGet = "https://anyconv.com/api/action/download/" + randomString + "/";
+                    // var settingsGetFile = {
+                    //     "url": urlUploadGet,
+                    //     "type": "GET",
+                    //     "dataType": "json",
+                    //     "crossDomain": true,
+                    //     "dataType" : 'jsonp', 
+                    //     // "processData": false,
+                    //     // "mimeType": "multipart/form-data",
+                    //     // "contentType": false,
+                    // };
+                    // jQuery.ajax(settingsGetFile).done(function (response) {
+                    //     console.log(response);
+                    // });
+                    getFile(randomString)
+                });
+            });
+        });
+
     }
 });
-function getListOptionConverter(list) {
+
+function getFile(randomString) {
+    var domainUrl = location.protocol + "//" + location.host;
+    console.log(domainUrl)
+    var urlUploadGet = "https://anyconv.com/api/action/download/" + randomString + "/";
+    var formDataGet = new FormData();
+    var settingsGetFile = {
+        url: domainUrl + "/proxy.php?url=" + urlUploadGet,
+        "type": "POST",
+        "xhrFields": { withCredentials: true },
+        "dataType": "text",
+        // "headers": {
+        //     "Cookie": "anyconvsession=eyJpdiI6InJRQzVQNjBwa01DcU9cL05TQkkzWmxRPT0iLCJ2YWx1ZSI6ImdoaXBsV3pYelZmRHIxS050TkpBMW1YOENsZjRMb29lUVk4Z3hMZ1wvRTZ6VjV6SEZXS2w1YVpXT0xqaTFOUmNzIiwibWFjIjoiMGU1OTNjN2RmYjYxZmRiOGUzNDlmNGRiY2U2M2JjODQ1MjIwNmIwOThmMjEwYWJlNjc1MzA5NzYwNjMwN2Q0ZSJ9"
+        // },
+        "processData": false,
+        "mimeType": "multipart/form-data",
+        "contentType": false,
+        // "data": formDataGet
+    };
+    jQuery.ajax(settingsGetFile).done(function (response) {
+        console.log(response);
+    });
+}
+
+function getListConverterByFile() {
+    return new Promise(function (resolve, reject) {
+        jQuery.ajax({
+            url: '/assets/lc.txt',
+            success: function (data) {
+                resolve(JSON.parse(data));
+            },
+            error: function () {
+                console.error("Error reading converter by file.");
+                reject("Error reading converter by file.");
+            }
+        });
+    });
+}
+
+function getListOptionConverter(list, dataType) {
     var option = "";
-    jQuery.each(list, function (index, item) {
+    jQuery.each(list[dataType], function (index, item) {
         option += `<option value="${item}">${item.toUpperCase()}</option>`;
     });
     return option;
+}
+
+function generateRandomString(length) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        result += characters.charAt(randomIndex);
+    }
+    return result;
 }
