@@ -126,6 +126,8 @@ jQuery(document).ready(function () {
                 var randomString = generateRandomString(32);
                 var valueConvertTo = jQuery("select.select-search-box").eq(index).val();
                 var urlUpload = "https://anyconv.com/api/action/add/" + randomString + "/";
+                console.log(urlUpload);
+
                 formDataPost.append("file", item, item.name);
                 formDataPost.append("to", valueConvertTo);
                 var settingsUploadConvert = {
@@ -134,10 +136,24 @@ jQuery(document).ready(function () {
                     "processData": false,
                     "mimeType": "multipart/form-data",
                     "contentType": false,
+                    "xhrFields": {
+                        withCredentials: true
+                      },
                     "data": formDataPost
                 };
-                jQuery.ajax(settingsUploadConvert).done(function (response) {
-                    // console.log(response);
+                jQuery.ajax(settingsUploadConvert).done(function (response, status, xhr) {
+                    var responseHeaders = xhr.getAllResponseHeaders();
+
+                    console.log(responseHeaders);
+                    console.log(response);
+                    var cookiesHeader = xhr.getResponseHeader('Set-Cookie');
+                    // 'data' contains the JSON response from the server (if any)
+                    if (cookiesHeader) {
+                        // You can parse the cookiesHeader string to extract the cookies if needed
+                        console.log('Cookies received:', cookiesHeader);
+                    } else {
+                        console.log('No cookies received in the response.');
+                    }
                     // var urlUploadGet = "https://anyconv.com/api/action/download/" + randomString + "/";
                     // var settingsGetFile = {
                     //     "url": urlUploadGet,
