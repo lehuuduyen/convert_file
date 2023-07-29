@@ -162,21 +162,14 @@ jQuery(document).ready(function () {
 
 function getFile(randomString) {
     var domainUrl = location.protocol + "//" + location.host;
-    console.log(domainUrl)
-    var urlUploadGet = "https://anyconv.com/api/action/download/" + randomString + "/";
-    var formDataGet = new FormData();
     var settingsGetFile = {
-        url: domainUrl + "/proxy.php?url=" + urlUploadGet,
+        url: domainUrl + "/proxy.php?random=" + randomString,
         "type": "POST",
         "xhrFields": { withCredentials: true },
         "dataType": "text",
-        // "headers": {
-        //     "Cookie": "anyconvsession=eyJpdiI6InJRQzVQNjBwa01DcU9cL05TQkkzWmxRPT0iLCJ2YWx1ZSI6ImdoaXBsV3pYelZmRHIxS050TkpBMW1YOENsZjRMb29lUVk4Z3hMZ1wvRTZ6VjV6SEZXS2w1YVpXT0xqaTFOUmNzIiwibWFjIjoiMGU1OTNjN2RmYjYxZmRiOGUzNDlmNGRiY2U2M2JjODQ1MjIwNmIwOThmMjEwYWJlNjc1MzA5NzYwNjMwN2Q0ZSJ9"
-        // },
         "processData": false,
         "mimeType": "multipart/form-data",
         "contentType": false,
-        // "data": formDataGet
     };
     jQuery.ajax(settingsGetFile).done(function (response) {
         console.log(response);
