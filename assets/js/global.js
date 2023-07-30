@@ -109,6 +109,10 @@ jQuery(document).ready(function () {
 
         // Delete File
         jQuery('.file-delete').click(function () {
+            indexFile = jQuery(this).parent().index();
+            files = jQuery.grep(files, function (value) {
+                return value !== files[indexFile];
+            });
             jQuery(this).parent().remove();
             if (jQuery(".file").length == 0) {
                 jQuery('div.files-list').remove();
