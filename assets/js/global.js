@@ -126,7 +126,7 @@ jQuery(document).ready(function () {
                 
                 var randomString = generateRandomString(32);
                 var valueConvertTo = jQuery("select.select-search-box").eq(index).val();
-                var urlUpload = "https://anyconv.com/api/action/add/" + randomString + "/";
+                var urlUpload = "http://web_convert.dev.com/test.php";
 
                 formDataPost.append("file", item, item.name);
                 formDataPost.append("to", valueConvertTo);

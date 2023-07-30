@@ -1,4 +1,24 @@
 <?php
+
+
+$url = 'https://anyconv.com/api/action/download/7615f37bbfe3133c253281fa25122asa/';
+$cookieValue = 'eyJpdiI6IjYwRVh2TkNQRFJQQlZOa3gzZUVXbFE9PSIsInZhbHVlIjoid0dXZ1VDNkp5MzFrVENFOVYzVTdMY3FJb3dYcDR3bFcxVTZUXC9OeXVBSWQ3cUs1M1VoNFV0SWRCXC8wM2lMK2dHIiwibWFjIjoiMDdjNjNkYWVhNjk2ZmYwYWUwMjUzYWFkYzA3ZjA5YTk5NGFhZWY1ZGVjNGJiYjc3MjJhMDMxNGFmMmExZjg3NiJ9';
+
+$ch = curl_init($url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, ['Cookie: anyconvsession=' . $cookieValue]);
+$response = curl_exec($ch);
+curl_close($ch);
+
+if ($response === false) {
+    echo "Error occurred while fetching data.";
+} else {
+    echo $response;
+}
+
+
+
+die;
 $randomString = (isset($_GET['random']))?$_GET['random']:"";
 $header = (isset(getallheaders()['Cookie']))?getallheaders()['Cookie']:"";
 $url = 'https://anyconv.com/api/action/download/'.$randomString;
