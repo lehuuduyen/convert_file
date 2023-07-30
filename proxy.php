@@ -1,5 +1,36 @@
 <?php
-$randomString = $_GET['random'];
+$randomString = (isset($_GET['random']))?$_GET['random']:"";
+$header = (isset(getallheaders()['Cookie']))?getallheaders()['Cookie']:"";
+$url = 'https://anyconv.com/api/action/download/'.$randomString;
+$cookieValue = $header;
+if($cookieValue !=""){
+    $listCookie = explode(';',$cookieValue);
+    $cookieValue = "";
+    foreach($listCookie as $value){
+        if(preg_match("/anyconvsession/i", $value)){
+            $cookieValue = $value;
+        }
+    }
+}
+
+$url = 'https://anyconv.com/api/action/download/nXrXDvUN8obxmlciIvb7CHNjXjx2T3bv/';
+$cookieValue = 'eyJpdiI6IjRaRjRvd0hzQVh0WGxhT2FYUXFRZnc9PSIsInZhbHVlIjoiTFZrRWlGeTFKYzJkMzc1QU9yZFREUzZhTDFaSEczOVpPdmhXdk5qT2xmT21ZNnZLODFxNG9BeU9qdEUxV1lLXC8iLCJtYWMiOiJmNjVlYjYzODZlOTlkYWE3NjcxOWE3NjUxY2Y3OTg5MmI4ODk3Nzg5YThjYTZjZTliZmZmZTI5ZjcxZWZlNDZkIn0%3D';
+
+$ch = curl_init($url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, ['Cookie: anyconvsession=' . $cookieValue]);
+$response = curl_exec($ch);
+curl_close($ch);
+
+if ($response === false) {
+    echo "Error occurred while fetching data.";
+} else {
+    echo $response;
+}
+
+
+die;
+
 // The URL you want to access via the proxy
 $targetUrl = 'https://anyconv.com/api/action/download/' . $randomString;
 

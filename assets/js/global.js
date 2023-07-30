@@ -1,4 +1,5 @@
 jQuery(document).ready(function () {
+    document.cookie="anyconvsession=eyJpdiI6Ikl3cVRZMHFMRnBmTGJ4bGNqd1BtMHc9PSIsInZhbHVlIjoiUjYyMDFtVnhOODhGWkVKVXE5ZUxNd3hRNGxVRWhtbUhmcEJFQW1OTmRoTkxTbjM1YnFFdzNIUG5lc1VqZmRzOSIsIm1hYyI6IjY1M2FjY2NiNGU1MGNmMDVmMGEwMmFiNmFmODZhMTU2NDA1YmZjZWJlYmRjMmE3Mjk4OGYxYjVjYzhlMjk3OTgifQ%3D%3D"
     var listConvertByFile = {};
     (async function () {
         try {
@@ -122,11 +123,10 @@ jQuery(document).ready(function () {
         jQuery('.convert-button').click(function () {
             jQuery.each(files, function (index, item) {
                 var formDataPost = new FormData();
-                console.log(index)
+                
                 var randomString = generateRandomString(32);
                 var valueConvertTo = jQuery("select.select-search-box").eq(index).val();
                 var urlUpload = "https://anyconv.com/api/action/add/" + randomString + "/";
-                console.log(urlUpload);
 
                 formDataPost.append("file", item, item.name);
                 formDataPost.append("to", valueConvertTo);
@@ -136,24 +136,13 @@ jQuery(document).ready(function () {
                     "processData": false,
                     "mimeType": "multipart/form-data",
                     "contentType": false,
-                    "xhrFields": {
-                        withCredentials: true
-                      },
                     "data": formDataPost
                 };
                 jQuery.ajax(settingsUploadConvert).done(function (response, status, xhr) {
-                    var responseHeaders = xhr.getAllResponseHeaders();
+                    var setCookieHeader = xhr.getResponseHeader('Set-Cookie');
 
-                    console.log(responseHeaders);
-                    console.log(response);
-                    var cookiesHeader = xhr.getResponseHeader('Set-Cookie');
-                    // 'data' contains the JSON response from the server (if any)
-                    if (cookiesHeader) {
-                        // You can parse the cookiesHeader string to extract the cookies if needed
-                        console.log('Cookies received:', cookiesHeader);
-                    } else {
-                        console.log('No cookies received in the response.');
-                    }
+                    // Now you can use the 'setCookieHeader' as needed
+                    console.log('Set-Cookie Header:', setCookieHeader);
                     // var urlUploadGet = "https://anyconv.com/api/action/download/" + randomString + "/";
                     // var settingsGetFile = {
                     //     "url": urlUploadGet,
@@ -186,6 +175,10 @@ function getFile(randomString) {
         "processData": false,
         "mimeType": "multipart/form-data",
         "contentType": false,
+        "headers": {
+            // ''
+        }, // Set custom headers here
+
     };
     jQuery.ajax(settingsGetFile).done(function (response) {
         console.log(response);
