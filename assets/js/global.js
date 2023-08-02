@@ -1,5 +1,4 @@
 jQuery(document).ready(function () {
-    document.cookie="anyconvsession=eyJpdiI6Ikl3cVRZMHFMRnBmTGJ4bGNqd1BtMHc9PSIsInZhbHVlIjoiUjYyMDFtVnhOODhGWkVKVXE5ZUxNd3hRNGxVRWhtbUhmcEJFQW1OTmRoTkxTbjM1YnFFdzNIUG5lc1VqZmRzOSIsIm1hYyI6IjY1M2FjY2NiNGU1MGNmMDVmMGEwMmFiNmFmODZhMTU2NDA1YmZjZWJlYmRjMmE3Mjk4OGYxYjVjYzhlMjk3OTgifQ%3D%3D"
     var listConvertByFile = {};
     (async function () {
         try {
@@ -58,12 +57,9 @@ jQuery(document).ready(function () {
         jQuery('div#uploadFile').remove();
         var listHTML = "<div class='files-list'>";
         jQuery.each(files, function (index, item) {
-            var dataType = "";
-            var fileSizeInKB = "";
-            if (item.type.indexOf("image") !== -1) {
-                dataType = item.type.split("/")[1];
-                var fileSizeInKB = parseFloat(item.size / 1024);
-            }
+            var dataType = item.type.split("/")[1];
+            var fileSizeInKB = parseFloat(item.size / 1024);
+            console.log(item.size)
             listHTML += `<div class="file">
                             <div class="file-icon file-icon-lg" data-type="${dataType}">
                                 <div class="file-size">${fileSizeInKB.toFixed(1)} KB</div>
@@ -123,15 +119,16 @@ jQuery(document).ready(function () {
         jQuery('.convert-button').click(function () {
             jQuery.each(files, function (index, item) {
                 var formDataPost = new FormData();
-                
-                var randomString = generateRandomString(32);
                 var valueConvertTo = jQuery("select.select-search-box").eq(index).val();
-                var urlUpload = "http://web_convert.dev.com/test.php";
+                var source_mime = item.type.replace("/", "%2F")
+                var urlPost = location.protocol + "/test.php";
+                var urlUpload = `https://mconverter.eu/cf_nocache/ajax/upload.php?target_format=` + valueConvertTo + `&total_size=` + item.size + `&source_mime=` + source_mime + `&filename=` + item.name + `&abd=false`;
 
-                formDataPost.append("file", item, item.name);
-                formDataPost.append("to", valueConvertTo);
+                formDataPost.append("file", item);
+                formDataPost.append("url", urlUpload);
+
                 var settingsUploadConvert = {
-                    "url": urlUpload,
+                    "url": urlPost,
                     "method": "POST",
                     "processData": false,
                     "mimeType": "multipart/form-data",
@@ -139,10 +136,6 @@ jQuery(document).ready(function () {
                     "data": formDataPost
                 };
                 jQuery.ajax(settingsUploadConvert).done(function (response, status, xhr) {
-                    var setCookieHeader = xhr.getResponseHeader('Set-Cookie');
-
-                    // Now you can use the 'setCookieHeader' as needed
-                    console.log('Set-Cookie Header:', setCookieHeader);
                     // var urlUploadGet = "https://anyconv.com/api/action/download/" + randomString + "/";
                     // var settingsGetFile = {
                     //     "url": urlUploadGet,
@@ -157,11 +150,10 @@ jQuery(document).ready(function () {
                     // jQuery.ajax(settingsGetFile).done(function (response) {
                     //     console.log(response);
                     // });
-                    getFile(randomString)
+                    // getFile(randomString)
                 });
             });
         });
-
     }
 });
 
