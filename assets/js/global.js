@@ -66,6 +66,7 @@ jQuery(document).ready(function () {
                             </div>
                             <div class="file-name">${item.name}</div>
                             <div class="file-format-to">sang</div>
+                            <div id="downloadLinkContainer" style="display: none;"></div>
                             <div class="file-format-to">
                                 <div class="form-group search">
                                     <select class="selectpicker select-search-box" data-live-search="true" style="display: none;">
@@ -120,12 +121,10 @@ jQuery(document).ready(function () {
             jQuery.each(files, function (index, item) {
                 var formDataPost = new FormData();
                 var valueConvertTo = jQuery("select.select-search-box").eq(index).val();
-                var source_mime = item.type.replace("/", "%2F")
-                var urlPost = location.protocol + "/test.php";
-                var urlUpload = `https://mconverter.eu/cf_nocache/ajax/upload.php?target_format=` + valueConvertTo + `&total_size=` + item.size + `&source_mime=` + source_mime + `&filename=` + item.name + `&abd=false`;
+                var urlPost = location.protocol + "/convert.php";
 
                 formDataPost.append("file", item);
-                formDataPost.append("url", urlUpload);
+                formDataPost.append("to", valueConvertTo);
 
                 var settingsUploadConvert = {
                     "url": urlPost,
@@ -136,21 +135,12 @@ jQuery(document).ready(function () {
                     "data": formDataPost
                 };
                 jQuery.ajax(settingsUploadConvert).done(function (response, status, xhr) {
-                    // var urlUploadGet = "https://anyconv.com/api/action/download/" + randomString + "/";
-                    // var settingsGetFile = {
-                    //     "url": urlUploadGet,
-                    //     "type": "GET",
-                    //     "dataType": "json",
-                    //     "crossDomain": true,
-                    //     "dataType" : 'jsonp', 
-                    //     // "processData": false,
-                    //     // "mimeType": "multipart/form-data",
-                    //     // "contentType": false,
-                    // };
-                    // jQuery.ajax(settingsGetFile).done(function (response) {
-                    //     console.log(response);
-                    // });
-                    // getFile(randomString)
+                    var filename = response.substring(response.lastIndexOf("/") + 1);
+                    console.log(filename)
+                    // Append the link and trigger the download
+                    jQuery("#downloadLinkContainer").html(`<a href="${response}" download='${filename}''>Download</a>`);
+                    jQuery("#downloadLinkContainer").show();
+                    jQuery(".file-format-to").hide();
                 });
             });
         });
