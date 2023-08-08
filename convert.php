@@ -42,9 +42,24 @@ if (isset($_POST)) {
                 imagedestroy($gifImage);
                 echo $gifFilePath;
                 break;
-                // case label3:
-                //   code to be executed if n=label3;
-                //   break;
+            case 'pdf':
+                require('fpdf/fpdf.php');
+
+                $jpegFilePath = $tempFilePath;
+                $pdfFilePath = './file/' . str_replace(".jpg", "", $file['name']) . ".pdf";
+
+                // Create new PDF instance
+                $pdf = new FPDF();
+                $pdf->AddPage();
+
+                // Set image scale factor
+                $pdf->SetAutoPageBreak(true, 10);
+                $pdf->Image($jpegFilePath, 10, 10, 190, 0, 'JPEG');
+
+                // Output the PDF to the browser or save to a file
+                $pdf->Output($pdfFilePath, 'F');
+                echo $pdfFilePath;
+                break;
                 //   ...
             default:
         }
