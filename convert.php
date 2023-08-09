@@ -5,8 +5,11 @@ if (isset($_POST)) {
     $tempFilePath = $file['tmp_name'];
     $to = $_POST['to'];
     $protocol = strpos($_SERVER['SERVER_SIGNATURE'], '443') !== false ? 'https://' : 'http://';
-
-    if ($file['type'] == "image/jpeg") {
+    if ($file['type'] == "image/jpeg" || $file['type'] == "image/jpg") {
+        if (mime_content_type($tempFilePath) != "image/jpeg") {
+            echo "Failed to load the JPEG/JPG image.";
+            exit;
+        }
         switch ($to) {
             case "png":
                 $output = str_replace(".jpg", "", $file['name']) . ".png";
@@ -48,22 +51,43 @@ if (isset($_POST)) {
                 $jpegFilePath = $tempFilePath;
                 $pdfFilePath = './file/' . str_replace(".jpg", "", $file['name']) . ".pdf";
 
-                // Create new PDF instance
                 $pdf = new FPDF();
                 $pdf->AddPage();
 
-                // Set image scale factor
                 $pdf->SetAutoPageBreak(true, 10);
                 $pdf->Image($jpegFilePath, 10, 10, 190, 0, 'JPEG');
 
-                // Output the PDF to the browser or save to a file
                 $pdf->Output($pdfFilePath, 'F');
                 echo $pdfFilePath;
                 break;
-                //   ...
             default:
         }
-        // var_dump($fileResult);
-        // exit;
+    } else if ($file['type'] == "image/png") {
+        if (mime_content_type($tempFilePath) != "image/png") {
+            echo "Failed to load the PNG image.";
+            exit;
+        }
+        switch ($to) {
+            case "jpeg":
+                $output = str_replace(".png", "", $file['name']) . ".jpeg";
+                $pngImage = imagecreatefrompng($tempFilePath);
+                // Create a new blank PNG image
+                $width = imagesx($pngImage);
+                $height = imagesy($pngImage);
+                $jpegImage = imagecreatetruecolor($width, $height);
+                $whiteColor = imagecolorallocate($pngImage, 255, 255, 255);
+                imagefill($jpegImage, 0, 0, $whiteColor);
+                imagecopy($jpegImage, $pngImage, 0, 0, 0, 0, $width, $height);
+
+                $tempPngFilePath =  './file/' . $output;
+                imagejpeg($jpegImage, $tempPngFilePath, 90);
+
+                imagedestroy($pngImage);
+                imagedestroy($pngImage);
+                echo $tempPngFilePath;
+                break;
+
+            default:
+        }
     }
 }

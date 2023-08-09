@@ -135,12 +135,17 @@ jQuery(document).ready(function () {
                     "data": formDataPost
                 };
                 jQuery.ajax(settingsUploadConvert).done(function (response, status, xhr) {
-                    var filename = response.substring(response.lastIndexOf("/") + 1);
-                    console.log(filename)
-                    // Append the link and trigger the download
-                    jQuery("#downloadLinkContainer").html(`<a href="${response}" download='${filename}''>Download</a>`);
-                    jQuery("#downloadLinkContainer").show();
-                    jQuery(".file-format-to").hide();
+                    if (response.includes("Failed to load")) {
+                        jQuery("#downloadLinkContainer").html(`<p class="text-danger">${response}</p>`);
+                        jQuery("#downloadLinkContainer").show();
+                        jQuery(".file-format-to").hide();
+                    } else {
+                        var filename = response.substring(response.lastIndexOf("/") + 1);
+                        // Append the link and trigger the download
+                        jQuery("#downloadLinkContainer").html(`<a href="${response}" download='${filename}''>Download</a>`);
+                        jQuery("#downloadLinkContainer").show();
+                        jQuery(".file-format-to").hide();
+                    }
                 });
             });
         });
