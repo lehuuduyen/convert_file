@@ -65,7 +65,7 @@ jQuery(document).ready(function () {
                                 <div class="file-size">${fileSizeInKB.toFixed(1)} KB</div>
                             </div>
                             <div class="file-name">${item.name}</div>
-                            <div class="file-format-to">sang</div>
+                            <div>sang</div>
                             <div id="downloadLinkContainer" style="display: none;"></div>
                             <div class="file-format-to">
                                 <div class="form-group search">
@@ -136,15 +136,15 @@ jQuery(document).ready(function () {
                 };
                 jQuery.ajax(settingsUploadConvert).done(function (response, status, xhr) {
                     if (response.includes("Failed to load")) {
-                        jQuery("#downloadLinkContainer").html(`<p class="text-danger">${response}</p>`);
-                        jQuery("#downloadLinkContainer").show();
-                        jQuery(".file-format-to").hide();
+                        jQuery(".file #downloadLinkContainer").eq(index).html(`<p class="text-danger">${response}</p>`);
+                        jQuery(".file #downloadLinkContainer").eq(index).show();
+                        jQuery(".file .file-format-to:not([style*='display: none']").eq(index).hide();
                     } else {
                         var filename = response.substring(response.lastIndexOf("/") + 1);
                         // Append the link and trigger the download
-                        jQuery("#downloadLinkContainer").html(`<a href="${response}" download='${filename}''>Download</a>`);
-                        jQuery("#downloadLinkContainer").show();
-                        jQuery(".file-format-to").hide();
+                        jQuery(".file #downloadLinkContainer").eq(index).html(`<a href="${response}" download='${filename}''>Download</a>`);
+                        jQuery(".file #downloadLinkContainer").eq(index).show();
+                        jQuery(".file .file-format-to").eq(index).hide();
                     }
                 });
             });
