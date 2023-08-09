@@ -86,6 +86,24 @@ if (isset($_POST)) {
                 imagedestroy($pngImage);
                 echo $tempPngFilePath;
                 break;
+            case "jpg":
+                $output = str_replace(".png", "", $file['name']) . ".jpg";
+                $pngImage = imagecreatefrompng($tempFilePath);
+                // Create a new blank PNG image
+                $width = imagesx($pngImage);
+                $height = imagesy($pngImage);
+                $jpegImage = imagecreatetruecolor($width, $height);
+                $whiteColor = imagecolorallocate($pngImage, 255, 255, 255);
+                imagefill($jpegImage, 0, 0, $whiteColor);
+                imagecopy($jpegImage, $pngImage, 0, 0, 0, 0, $width, $height);
+
+                $tempPngFilePath =  './file/' . $output;
+                imagejpeg($jpegImage, $tempPngFilePath, 90);
+
+                imagedestroy($pngImage);
+                imagedestroy($pngImage);
+                echo $tempPngFilePath;
+                break;
 
             default:
         }

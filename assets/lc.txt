@@ -1,1 +1,1 @@
-{"jpeg":["png","gif","pdf"], "jpg":["png","gif","pdf"], "png":["jpeg"]}
+{"jpeg":["png","gif","pdf"], "jpg":["png","gif","pdf"], "png":["jpeg", "jpg"]}
