@@ -4,7 +4,6 @@ if (isset($_POST)) {
     $file = $_FILES["file"];
     $tempFilePath = $file['tmp_name'];
     $to = $_POST['to'];
-    $protocol = strpos($_SERVER['SERVER_SIGNATURE'], '443') !== false ? 'https://' : 'http://';
     if ($file['type'] == "image/jpeg" || $file['type'] == "image/jpg") {
         if (mime_content_type($tempFilePath) != "image/jpeg") {
             echo "Failed to load the JPEG/JPG image.";
