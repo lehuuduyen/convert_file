@@ -11,7 +11,7 @@ if (isset($_POST)) {
         }
         switch ($to) {
             case "png":
-                $output = str_replace(".jpg", "", $file['name']) . ".png";
+                $output = str_replace([".jpg", ".jpeg"], "", $file['name']) . ".png";
                 $jpegImage = imagecreatefromjpeg($tempFilePath);
                 // Create a new blank PNG image
                 $width = imagesx($jpegImage);
@@ -30,7 +30,7 @@ if (isset($_POST)) {
                 echo $tempPngFilePath;
                 break;
             case 'gif':
-                $outputGif = str_replace(".jpg", "", $file['name']) . ".gif";
+                $outputGif = str_replace([".jpg", ".jpeg"], "", $file['name']) . ".gif";
                 $jpegImage = imagecreatefromjpeg($tempFilePath);
                 $width = imagesx($jpegImage);
                 $height = imagesy($jpegImage);
@@ -48,7 +48,7 @@ if (isset($_POST)) {
                 require('fpdf/fpdf.php');
 
                 $jpegFilePath = $tempFilePath;
-                $pdfFilePath = './file/' . str_replace(".jpg", "", $file['name']) . ".pdf";
+                $pdfFilePath = './file/' . str_replace([".jpg", ".jpeg"], "", $file['name']) . ".pdf";
 
                 $pdf = new FPDF();
                 $pdf->AddPage();
@@ -59,7 +59,18 @@ if (isset($_POST)) {
                 $pdf->Output($pdfFilePath, 'F');
                 echo $pdfFilePath;
                 break;
+            case 'jpg':
+                $outputJpg = './file/' . str_replace(".jpeg", "", $file['name']) . ".jpg";
+                rename($tempFilePath, $outputJpg);
+                echo $outputJpg;
+                break;
+            case 'jpeg':
+                $outputJpeg = './file/' . str_replace(".jpg", "", $file['name']) . ".jpeg";
+                rename($tempFilePath, $outputJpeg);
+                echo $outputJpeg;
+                break;
             default:
+                echo "Failed to load file.";
         }
     } else if ($file['type'] == "image/png") {
         if (mime_content_type($tempFilePath) != "image/png") {
@@ -103,8 +114,24 @@ if (isset($_POST)) {
                 imagedestroy($pngImage);
                 echo $tempPngFilePath;
                 break;
+            case 'pdf':
+                require('fpdf/fpdf.php');
+
+                $pngFilePath = $tempFilePath;
+                $pdfFilePath = './file/' . str_replace(".png", "", $file['name']) . ".pdf";
+
+                $pdf = new FPDF();
+                $pdf->AddPage();
+
+                $pdf->SetAutoPageBreak(true, 10);
+                $pdf->Image($pngFilePath, 10, 10, 190, 0, 'PNG');
+
+                $pdf->Output($pdfFilePath, 'F');
+                echo $pdfFilePath;
+                break;
 
             default:
+                echo "Failed to load file.";
         }
     }
 }

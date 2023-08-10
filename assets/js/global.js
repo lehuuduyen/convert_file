@@ -57,9 +57,15 @@ jQuery(document).ready(function () {
         jQuery('div#uploadFile').remove();
         var listHTML = "<div class='files-list'>";
         jQuery.each(files, function (index, item) {
+            var extension = item.name.split('.').pop();
             var dataType = item.type.split("/")[1];
+            if (extension.includes("jpeg")) {
+                dataType = "jpeg";
+            } else if (extension.includes("jpg")) {
+                dataType = "jpg";
+            }
             var fileSizeInKB = parseFloat(item.size / 1024);
-            console.log(item.size)
+            console.log(dataType)
             listHTML += `<div class="file">
                             <div class="file-icon file-icon-lg" data-type="${dataType}">
                                 <div class="file-size">${fileSizeInKB.toFixed(1)} KB</div>
