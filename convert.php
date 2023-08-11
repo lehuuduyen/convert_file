@@ -29,7 +29,7 @@ if (isset($_POST)) {
             rrmdir($targetDirectory);
         }
         if (!is_dir($targetDirectory)) {
-            mkdir($targetDirectory, 077, true);
+            mkdir($targetDirectory, 7777, true);
         }
         if ($file['type'] == "image/jpeg" || $file['type'] == "image/jpg") {
             if (mime_content_type($tempFilePath) != "image/jpeg") {
