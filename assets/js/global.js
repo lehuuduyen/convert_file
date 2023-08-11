@@ -113,6 +113,10 @@ jQuery(document).ready(function () {
 
         // Delete File
         jQuery('.file-delete').click(function () {
+            indexFile = jQuery(this).parent().index();
+            files = jQuery.grep(files, function (value) {
+                return value !== files[indexFile];
+            });
             jQuery(this).parent().remove();
             if (jQuery(".file").length == 0) {
                 jQuery('div.files-list').remove();
@@ -138,17 +142,23 @@ jQuery(document).ready(function () {
                     "processData": false,
                     "mimeType": "multipart/form-data",
                     "contentType": false,
-                    "data": formDataPost
+                    "data": formDataPost,
+                    beforeSend: function () {
+                        jQuery(".file #downloadLinkContainer").eq(index).html(`<p>...Loading</p>`);
+                        jQuery(".file #downloadLinkContainer").eq(index).show();
+                    },
                 };
                 jQuery.ajax(settingsUploadConvert).done(function (response, status, xhr) {
-                    if (response.includes("Failed to load")) {
-                        jQuery(".file #downloadLinkContainer").eq(index).html(`<p class="text-danger">${response}</p>`);
+                    var result = jQuery.parseJSON(response)
+                    if (result.error) {
+                        jQuery(".file #downloadLinkContainer").eq(index).html(`<p class="text-danger">${result.error}</p>`);
                         jQuery(".file #downloadLinkContainer").eq(index).show();
                         jQuery(".file .file-format-to:not([style*='display: none']").eq(index).hide();
                     } else {
-                        var filename = response.substring(response.lastIndexOf("/") + 1);
+                        jQuery(".file #downloadLinkContainer").eq(index).hide();
+                        var filename = result.message.substring(result.message.lastIndexOf("/") + 1);
                         // Append the link and trigger the download
-                        jQuery(".file #downloadLinkContainer").eq(index).html(`<a href="${response}" download='${filename}''>Download</a>`);
+                        jQuery(".file #downloadLinkContainer").eq(index).html(`<a href="${result.message}" download='${filename}''>Download</a>`);
                         jQuery(".file #downloadLinkContainer").eq(index).show();
                         jQuery(".file .file-format-to").eq(index).hide();
                     }
