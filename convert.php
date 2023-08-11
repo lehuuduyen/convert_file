@@ -1,5 +1,22 @@
 <?php
 if (isset($_POST)) {
+    function rrmdir($src)
+    {
+        $dir = opendir($src);
+        while (false !== ($file = readdir($dir))) {
+            if (($file != '.') && ($file != '..')) {
+                $full = $src . '/' . $file;
+                if (is_dir($full)) {
+                    rrmdir($full);
+                } else {
+                    unlink($full);
+                }
+            }
+        }
+        closedir($dir);
+        rmdir($src);
+    }
+
     try {
         set_error_handler(function ($severity, $message, $file, $line) {
             throw new \ErrorException($message, 0, $severity, $file, $line);
@@ -8,6 +25,9 @@ if (isset($_POST)) {
         $tempFilePath = $file['tmp_name'];
         $to = $_POST['to'];
         $targetDirectory = './file/';
+        if (is_dir($targetDirectory)) {
+            rrmdir($targetDirectory);
+        }
         if (!is_dir($targetDirectory)) {
             mkdir($targetDirectory, 077, true);
         }
@@ -34,7 +54,7 @@ if (isset($_POST)) {
                     imagedestroy($jpegImage);
                     imagedestroy($pngImage);
                     echo json_encode(array("success" => true, "message" => $tempPngFilePath));
-                    echo $tempPngFilePath;
+                    // echo $tempPngFilePath;
                     break;
                 case 'gif':
                     $outputGif = str_replace([".jpg", ".jpeg"], "", $file['name']) . ".gif";
