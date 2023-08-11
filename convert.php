@@ -18,9 +18,9 @@ if (isset($_POST)) {
     }
 
     try {
-        set_error_handler(function ($severity, $message, $file, $line) {
-            throw new \ErrorException($message, 0, $severity, $file, $line);
-        });
+        // set_error_handler(function ($severity, $message, $file, $line) {
+        //     throw new \ErrorException($message, 0, $severity, $file, $line);
+        // });
         $file = $_FILES["file"];
         $tempFilePath = $file['tmp_name'];
         $to = $_POST['to'];
@@ -169,7 +169,7 @@ if (isset($_POST)) {
         }
     } catch (Exception $e) {
         echo json_encode(array("error" => "Failed to load convert. Please try again."));
-    } finally {
-        restore_error_handler();
+    // } finally {
+    //     restore_error_handler();
     }
 }
