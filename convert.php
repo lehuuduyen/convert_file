@@ -26,6 +26,7 @@ if (isset($_POST)) {
         $to = $_POST['to'];
         $targetDirectory = './file/';
         if (is_dir($targetDirectory)) {
+            chmod($targetDirectory, 0777);
             rrmdir($targetDirectory);
         }
         if (!is_dir($targetDirectory)) {
