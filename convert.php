@@ -17,6 +17,16 @@ if (isset($_POST)) {
         rmdir($src);
     }
 
+    function urlPathFile()
+    {
+        if (isset($_SERVER['HTTPS'])) {
+            $protocol = ($_SERVER['HTTPS'] && $_SERVER['HTTPS'] != "off") ? "https" : "http";
+        } else {
+            $protocol = 'http';
+        }
+        return $protocol . "://" . $_SERVER['HTTP_HOST'] . "/" . "file/";
+    }
+
     try {
         set_error_handler(function ($severity, $message, $file, $line) {
             throw new \ErrorException($message, 0, $severity, $file, $line);
@@ -25,6 +35,7 @@ if (isset($_POST)) {
         $tempFilePath = $file['tmp_name'];
         $to = $_POST['to'];
         $targetDirectory = './file/';
+        $currentFloderDomain = './file/';
         if (is_dir($targetDirectory)) {
             chmod($targetDirectory, 0777);
             rrmdir($targetDirectory);
@@ -34,7 +45,8 @@ if (isset($_POST)) {
         }
         if ($file['type'] == "image/jpeg" || $file['type'] == "image/jpg") {
             if (mime_content_type($tempFilePath) != "image/jpeg") {
-                echo json_encode(array("error" => "Failed to load the JPEG/JPG image."));exit;
+                echo json_encode(array("error" => "Failed to load the JPEG/JPG image."));
+                exit;
             }
             switch ($to) {
                 case "png":
@@ -48,14 +60,13 @@ if (isset($_POST)) {
                     imagefill($pngImage, 0, 0, $whiteColor);
                     imagecopy($pngImage, $jpegImage, 0, 0, 0, 0, $width, $height);
 
-                    $tempPngFilePath =  './file/' . $output;
+                    $tempPngFilePath =  $currentFloderDomain . $output;
                     imagepng($pngImage, $tempPngFilePath);
-
                     // Clean up memory
                     imagedestroy($jpegImage);
                     imagedestroy($pngImage);
-                    echo json_encode(array("success" => true, "message" => $tempPngFilePath));
-                    // echo $tempPngFilePath;
+
+                    echo json_encode(array("success" => true, "message" => urlPathFile(). $output));
                     break;
                 case 'gif':
                     $outputGif = str_replace([".jpg", ".jpeg"], "", $file['name']) . ".gif";
@@ -66,18 +77,19 @@ if (isset($_POST)) {
                     $whiteColor = imagecolorallocate($gifImage, 255, 255, 255);
                     imagefill($gifImage, 0, 0, $whiteColor);
                     imagecopy($gifImage, $jpegImage, 0, 0, 0, 0, $width, $height);
-                    $gifFilePath =  './file/' . $outputGif;
+                    $gifFilePath =  $currentFloderDomain . $outputGif;
                     imagegif($gifImage, $gifFilePath);
                     imagedestroy($jpegImage);
                     imagedestroy($gifImage);
-                    echo json_encode(array("success" => true, "message" => $gifFilePath));
+                    echo json_encode(array("success" => true, "message" => urlPathFile(). $output));
                     // echo $gifFilePath;
                     break;
                 case 'pdf':
                     require('fpdf/fpdf.php');
+                    $output = str_replace([".jpg", ".jpeg"], "", $file['name']) . ".pdf";
 
                     $jpegFilePath = $tempFilePath;
-                    $pdfFilePath = './file/' . str_replace([".jpg", ".jpeg"], "", $file['name']) . ".pdf";
+                    $pdfFilePath = $currentFloderDomain . $output;
 
                     $pdf = new FPDF();
                     $pdf->AddPage();
@@ -86,27 +98,25 @@ if (isset($_POST)) {
                     $pdf->Image($jpegFilePath, 10, 10, 190, 0, 'JPEG');
 
                     $pdf->Output($pdfFilePath, 'F');
-                    echo json_encode(array("success" => true, "message" => $pdfFilePath));
-                    // echo $pdfFilePath;
+                    echo json_encode(array("success" => true, "message" => urlPathFile(). $output));
                     break;
                 case 'jpg':
-                    $outputJpg = './file/' . str_replace(".jpeg", "", $file['name']) . ".jpg";
+                    $outputJpg = $currentFloderDomain . str_replace(".jpeg", "", $file['name']) . ".jpg";
                     rename($tempFilePath, $outputJpg);
-                    echo json_encode(array("success" => true, "message" => $outputJpg));
-                    // echo $outputJpg;
+                    echo json_encode(array("success" => true, "message" => urlPathFile(). $output));
                     break;
                 case 'jpeg':
-                    $outputJpeg = './file/' . str_replace(".jpg", "", $file['name']) . ".jpeg";
+                    $outputJpeg = $currentFloderDomain . str_replace(".jpg", "", $file['name']) . ".jpeg";
                     rename($tempFilePath, $outputJpeg);
-                    echo json_encode(array("success" => true, "message" => $outputJpeg));
-                    // echo $outputJpeg;
+                    echo json_encode(array("success" => true, "message" => urlPathFile(). $output));
                     break;
                 default:
                     echo json_encode(array("error" => "Failed to load file."));
             }
         } else if ($file['type'] == "image/png") {
             if (mime_content_type($tempFilePath) != "image/png") {
-                echo json_encode(array("error" => "Failed to load the PNG image."));exit;
+                echo json_encode(array("error" => "Failed to load the PNG image."));
+                exit;
             }
             switch ($to) {
                 case "jpeg":
@@ -120,13 +130,12 @@ if (isset($_POST)) {
                     imagefill($jpegImage, 0, 0, $whiteColor);
                     imagecopy($jpegImage, $pngImage, 0, 0, 0, 0, $width, $height);
 
-                    $tempJpegFilePath =  './file/' . $output;
+                    $tempJpegFilePath =  $currentFloderDomain . $output;
                     imagejpeg($jpegImage, $tempJpegFilePath, 90);
 
                     imagedestroy($pngImage);
                     imagedestroy($jpegImage);
-                    echo json_encode(array("success" => true, "message" => $tempJpegFilePath));
-                    // echo $tempPngFilePath;
+                    echo json_encode(array("success" => true, "message" => urlPathFile(). $output));
                     break;
                 case "jpg":
                     $output = str_replace(".png", "", $file['name']) . ".jpg";
@@ -139,19 +148,18 @@ if (isset($_POST)) {
                     imagefill($jpegImage, 0, 0, $whiteColor);
                     imagecopy($jpegImage, $pngImage, 0, 0, 0, 0, $width, $height);
 
-                    $tempJpgFilePath =  './file/' . $output;
+                    $tempJpgFilePath =  $currentFloderDomain . $output;
                     imagejpeg($jpegImage, $tempJpgFilePath, 90);
 
                     imagedestroy($pngImage);
                     imagedestroy($jpegImage);
-                    echo json_encode(array("success" => true, "message" => $tempJpgFilePath));
-                    // echo $tempJpgFilePath;
+                    echo json_encode(array("success" => true, "message" => urlPathFile(). $output));
                     break;
                 case 'pdf':
                     require('fpdf/fpdf.php');
-
+                    $output = str_replace(".png", "", $file['name']) . ".pdf";
                     $pngFilePath = $tempFilePath;
-                    $pdfFilePath = './file/' . str_replace(".png", "", $file['name']) . ".pdf";
+                    $pdfFilePath = $currentFloderDomain . $output;
 
                     $pdf = new FPDF();
                     $pdf->AddPage();
@@ -160,8 +168,7 @@ if (isset($_POST)) {
                     $pdf->Image($pngFilePath, 10, 10, 190, 0, 'PNG');
 
                     $pdf->Output($pdfFilePath, 'F');
-                    echo json_encode(array("success" => true, "message" => $pdfFilePath));
-                    // echo $pdfFilePath;
+                    echo json_encode(array("success" => true, "message" => urlPathFile(). $output));
                     break;
 
                 default:
