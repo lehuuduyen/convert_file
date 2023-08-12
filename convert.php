@@ -18,9 +18,9 @@ if (isset($_POST)) {
     }
 
     try {
-        // set_error_handler(function ($severity, $message, $file, $line) {
-        //     throw new \ErrorException($message, 0, $severity, $file, $line);
-        // });
+        set_error_handler(function ($severity, $message, $file, $line) {
+            throw new \ErrorException($message, 0, $severity, $file, $line);
+        });
         $file = $_FILES["file"];
         $tempFilePath = $file['tmp_name'];
         $to = $_POST['to'];
@@ -34,7 +34,7 @@ if (isset($_POST)) {
         }
         if ($file['type'] == "image/jpeg" || $file['type'] == "image/jpg") {
             if (mime_content_type($tempFilePath) != "image/jpeg") {
-                echo json_encode(array("error" => "Failed to load the JPEG/JPG image."));
+                echo json_encode(array("error" => "Failed to load the JPEG/JPG image."));exit;
             }
             switch ($to) {
                 case "png":
@@ -106,7 +106,7 @@ if (isset($_POST)) {
             }
         } else if ($file['type'] == "image/png") {
             if (mime_content_type($tempFilePath) != "image/png") {
-                echo json_encode(array("error" => "Failed to load the PNG image."));
+                echo json_encode(array("error" => "Failed to load the PNG image."));exit;
             }
             switch ($to) {
                 case "jpeg":
@@ -170,7 +170,7 @@ if (isset($_POST)) {
         }
     } catch (Exception $e) {
         echo json_encode(array("error" => "Failed to load convert. Please try again."));
-    // } finally {
-    //     restore_error_handler();
+    } finally {
+        restore_error_handler();
     }
 }
