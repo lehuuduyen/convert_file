@@ -66,7 +66,7 @@ if (isset($_POST)) {
                     imagedestroy($jpegImage);
                     imagedestroy($pngImage);
 
-                    echo json_encode(array("success" => true, "message" => urlPathFile(). $output));
+                    echo json_encode(array("success" => true, "message" => urlPathFile() . $output));
                     break;
                 case 'gif':
                     $outputGif = str_replace([".jpg", ".jpeg"], "", $file['name']) . ".gif";
@@ -81,7 +81,7 @@ if (isset($_POST)) {
                     imagegif($gifImage, $gifFilePath);
                     imagedestroy($jpegImage);
                     imagedestroy($gifImage);
-                    echo json_encode(array("success" => true, "message" => urlPathFile(). $output));
+                    echo json_encode(array("success" => true, "message" => urlPathFile() . $output));
                     // echo $gifFilePath;
                     break;
                 case 'pdf':
@@ -98,17 +98,25 @@ if (isset($_POST)) {
                     $pdf->Image($jpegFilePath, 10, 10, 190, 0, 'JPEG');
 
                     $pdf->Output($pdfFilePath, 'F');
-                    echo json_encode(array("success" => true, "message" => urlPathFile(). $output));
+                    echo json_encode(array("success" => true, "message" => urlPathFile() . $output));
                     break;
                 case 'jpg':
                     $outputJpg = $currentFloderDomain . str_replace(".jpeg", "", $file['name']) . ".jpg";
                     rename($tempFilePath, $outputJpg);
-                    echo json_encode(array("success" => true, "message" => urlPathFile(). $output));
+                    echo json_encode(array("success" => true, "message" => urlPathFile() . $output));
                     break;
                 case 'jpeg':
                     $outputJpeg = $currentFloderDomain . str_replace(".jpg", "", $file['name']) . ".jpeg";
                     rename($tempFilePath, $outputJpeg);
-                    echo json_encode(array("success" => true, "message" => urlPathFile(). $output));
+                    echo json_encode(array("success" => true, "message" => urlPathFile() . $output));
+                    break;
+                case "ico":
+                    require('php-ico/class-php-ico.php');
+                    $output = str_replace([".jpg", ".jpeg"], "", $file['name']) . ".ico";
+                    $tempIcoFilePath =  $currentFloderDomain . $output;
+                    $ico_lib = new PHP_ICO($tempFilePath);
+                    $ico_lib->save_ico($tempIcoFilePath);
+                    echo json_encode(array("success" => true, "message" => urlPathFile() . $output));
                     break;
                 default:
                     echo json_encode(array("error" => "Failed to load file."));
@@ -135,7 +143,7 @@ if (isset($_POST)) {
 
                     imagedestroy($pngImage);
                     imagedestroy($jpegImage);
-                    echo json_encode(array("success" => true, "message" => urlPathFile(). $output));
+                    echo json_encode(array("success" => true, "message" => urlPathFile() . $output));
                     break;
                 case "jpg":
                     $output = str_replace(".png", "", $file['name']) . ".jpg";
@@ -153,7 +161,7 @@ if (isset($_POST)) {
 
                     imagedestroy($pngImage);
                     imagedestroy($jpegImage);
-                    echo json_encode(array("success" => true, "message" => urlPathFile(). $output));
+                    echo json_encode(array("success" => true, "message" => urlPathFile() . $output));
                     break;
                 case 'pdf':
                     require('fpdf/fpdf.php');
@@ -168,9 +176,16 @@ if (isset($_POST)) {
                     $pdf->Image($pngFilePath, 10, 10, 190, 0, 'PNG');
 
                     $pdf->Output($pdfFilePath, 'F');
-                    echo json_encode(array("success" => true, "message" => urlPathFile(). $output));
+                    echo json_encode(array("success" => true, "message" => urlPathFile() . $output));
                     break;
-
+                case "ico":
+                    require('php-ico/class-php-ico.php');
+                    $output = str_replace([".png"], "", $file['name']) . ".ico";
+                    $tempIcoFilePath =  $currentFloderDomain . $output;
+                    $ico_lib = new PHP_ICO($tempFilePath);
+                    $ico_lib->save_ico($tempIcoFilePath);
+                    echo json_encode(array("success" => true, "message" => urlPathFile() . $output));
+                    break;
                 default:
                     echo json_encode(array("error" => "Failed to load file."));
             }
