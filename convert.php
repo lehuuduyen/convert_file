@@ -1,4 +1,5 @@
 <?php
+
 if (isset($_POST)) {
     function rrmdir($src)
     {
@@ -16,7 +17,24 @@ if (isset($_POST)) {
         closedir($dir);
         rmdir($src);
     }
+    function compress($source, $destination, $quality)
+    {
 
+        $info = getimagesize($source);
+
+        if ($info['mime'] == 'image/jpeg')
+            $image = imagecreatefromjpeg($source);
+
+        elseif ($info['mime'] == 'image/gif')
+            $image = imagecreatefromgif($source);
+
+        elseif ($info['mime'] == 'image/png')
+            $image = imagecreatefrompng($source);
+
+        imagejpeg($image, $destination, $quality);
+
+        return $destination;
+    }
     function urlPathFile()
     {
         if (isset($_SERVER['HTTPS'])) {
@@ -118,6 +136,13 @@ if (isset($_POST)) {
                     $ico_lib->save_ico($tempIcoFilePath);
                     echo json_encode(array("success" => true, "message" => urlPathFile() . $output));
                     break;
+                case "tinyPNG":
+                    $source_img = $tempFilePath;
+                    $destination_img = $source_img;
+
+                    $d = compress($source_img, $destination_img, 50);
+                    echo json_encode(array("success" => true, "message" => urlPathFile() . $destination_img));
+                    break;
                 default:
                     echo json_encode(array("error" => "Failed to load file."));
             }
@@ -186,11 +211,22 @@ if (isset($_POST)) {
                     $ico_lib->save_ico($tempIcoFilePath);
                     echo json_encode(array("success" => true, "message" => urlPathFile() . $output));
                     break;
+                case "tinyPNG":
+                    $source_img = $tempFilePath;
+                    $destination_img = $source_img;
+
+                    $d = compress($source_img, $destination_img, 50);
+                    echo json_encode(array("success" => true, "message" => urlPathFile() . $destination_img));
+                    break;
                 default:
                     echo json_encode(array("error" => "Failed to load file."));
             }
         }
     } catch (Exception $e) {
+        echo '<pre>';
+        print_r($e);
+        die;
+
         echo json_encode(array("error" => "Failed to load convert. Please try again."));
     } finally {
         restore_error_handler();

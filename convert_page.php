@@ -146,7 +146,9 @@
         </symbol>
     </svg>
     <main style="height: auto !important;">
-        <div class="uk-section-xsmall" style="height: auto !important;">
+        <br>
+        <h1 style="color: green;">Chuyển PNG sang TinyPNG</h1>
+        <div class="uk-card uk-card-default uk-card-hover uk-card-body form-section" style="height: auto !important;">
             <div class="uk-container uk-text-center">
                 <div class="upload-container">
                     <div class="upload-container-form">
@@ -166,100 +168,211 @@
                 </div>
             </div>
         </div>
-        <div class="uk-section uk-section-primary">
+        <div class="uk-section-xsmall uk-section-muted">
+            <div class="uk-container ">
+                <div class="uk-card uk-card-default uk-card-hover uk-text-center">
+                    <div class="uk-card-header">
+                        <h2>Làm cách nào để chuyển đổi PNG sang ICO trực tuyến?</h2>
+                        <div>Hướng dẫn từng bước để chuyển đổi png sang ico bằng AnyConv. Nó hoạt động trên PC (Windows, Mac, Linux) và thiết bị di động (iPhone, Android).</div>
+                    </div>
+                    <div class="uk-card-body uk-padding-small uk-padding-remove-top uk-margin-remove uk-flex uk-child-width-1-3@m content--how-to-convert__steps">
+                        <div class="step">
+                            <div class="uk-margin-remove-adjacent step--img"> <svg class="uk-width-small">
+                                    <use xlink:href="#icon-upload"></use>
+                                </svg> </div>
+                            <div class="step--title">
+                                <h3 id="#step-1">Tải lên tệp PNG</h3>
+                            </div>
+                            <div class="step--description">Kéo và thả tệp PNG của bạn vào khu vực tải lên. Kích thước tệp tối đa là 100&nbsp;MB.</div>
+                        </div>
+                        <div class="step" id="step-2">
+                            <div class="uk-margin-remove-adjacent step--img"> <svg class="uk-width-small">
+                                    <use xlink:href="#icon-convert"></use>
+                                </svg> </div>
+                            <div class="step--title">
+                                <h3>đổi PNG sang ICO</h3>
+                            </div>
+                            <div class="step--description">Nhấp vào "Chuyển đổi" để thay đổi png thành ico. Quá trình chuyển đổi thường mất vài giây.</div>
+                        </div>
+                        <div class="step">
+                            <div class="uk-margin-remove-adjacent step--img"> <svg class="uk-width-small">
+                                    <use xlink:href="#icon-download"></use>
+                                </svg> </div>
+                            <div class="step--title">
+                                <h3 id="#step-3">Tải xuống tệp ICO</h3>
+                            </div>
+                            <div class="step--description">Bây giờ bạn có thể tải xuống tệp ICO. Liên kết tải xuống chỉ hoạt động trên thiết bị của bạn.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="uk-section-xsmall uk-padding-remove">
             <div class="uk-container">
-                <div class="uk-grid uk-flex uk-flex-center uk-flex-middle type-format-container">
-                    <div class="uk-card uk-card-hover uk-card-default uk-card-body">
-                        <h4> <a href="/image-converter/"> Image </a> </h4>
-                        <ul class="uk-list uk-list-striped">
-                            <li><a href="/jpg-converter/"> JPG converter </a></li>
-                            <li><a href="/jpg-converter/"> JPEG converter </a></li>
-                            <li><a href="/png-converter/"> PNG converter </a></li>
-                            <!-- <li><a href="/gif-converter/"> GIF converter </a></li>
-                            <li><a href="/heic-converter/"> HEIC converter </a></li>
-                            <li><a href="/svg-converter/"> SVG converter </a></li> -->
-                        </ul>
+                <div class="uk-card uk-card-body ">
+                    <div class="uk-text-left uk-text-large"> <a href="/vi/chuyen-doi-png/"> Chuyển đổi PNG </a> </div>
+                    <div class="uk-container uk-align-center uk-child-width-1-1@s uk-child-width-1-6@l r">
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-7z/"> PNG sang 7Z </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-ai/"> PNG sang AI </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-avi/"> PNG sang AVI </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-bmp/"> PNG sang BMP </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-cur/"> PNG sang CUR </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-dds/"> PNG sang DDS </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-doc/"> PNG sang DOC </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-docx/"> PNG sang DOCX </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-dxf/"> PNG sang DXF </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-emf/"> PNG sang EMF </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-eps/"> PNG sang EPS </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-epub/"> PNG sang EPUB </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-gif/"> PNG sang GIF </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-hdr/"> PNG sang HDR </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-html/"> PNG sang HTML </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-icns/"> PNG sang ICNS </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-ico/"> PNG sang ICO </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-jpeg/"> PNG sang JPEG </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-jpg/"> PNG sang JPG </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-mov/"> PNG sang MOV </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-mp4/"> PNG sang MP4 </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-mpeg/"> PNG sang MPEG </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-obj/"> PNG sang OBJ </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-pcx/"> PNG sang PCX </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-pdf/"> PNG sang PDF </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-pgm/"> PNG sang PGM </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-ppm/"> PNG sang PPM </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-ps/"> PNG sang PS </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-psd/"> PNG sang PSD </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-rar/"> PNG sang RAR </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-raw/"> PNG sang RAW </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-rgb/"> PNG sang RGB </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-stl/"> PNG sang STL </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-svg/"> PNG sang SVG </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-tga/"> PNG sang TGA </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-tif/"> PNG sang TIF </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-tiff/"> PNG sang TIFF </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-webp/"> PNG sang WEBP </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-wmf/"> PNG sang WMF </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-xpm/"> PNG sang XPM </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-zip/"> PNG sang ZIP </a> </div>
+                        </div>
                     </div>
-                    <!-- <div class="uk-card uk-card-hover uk-card-default uk-card-body">
-                        <h4> <a href="/document-converter/"> Document </a> </h4>
-                        <ul class="uk-list uk-list-striped">
-                            <li><a href="/pdf-converter/"> PDF converter </a></li>
-                            <li><a href="/doc-converter/"> DOC converter </a></li>
-                            <li><a href="/docx-converter/"> DOCX converter </a></li>
-                            <li><a href="/xls-converter/"> XLS converter </a></li>
-                            <li><a href="/csv-converter/"> CSV converter </a></li>
-                        </ul>
-                    </div> -->
-                    <!-- <div class="uk-card uk-card-hover uk-card-default uk-card-body">
-                        <h4> <a href="/audio-converter/"> Audio </a> </h4>
-                        <ul class="uk-list uk-list-striped">
-                            <li><a href="/mp3-converter/"> MP3 converter </a></li>
-                            <li><a href="/wav-converter/"> WAV converter </a></li>
-                            <li><a href="/m4a-converter/"> M4A converter </a></li>
-                            <li><a href="/ogg-converter/"> OGG converter </a></li>
-                            <li><a href="/flac-converter/"> FLAC converter </a></li>
-                        </ul>
+                </div>
+            </div>
+            <div class="uk-container">
+                <div class="uk-card uk-card-body ">
+                    <div class="uk-text-left uk-text-large"> <a href="/vi/chuyen-doi-ico/"> Chuyển đổi sang ICO </a> </div>
+                    <div class="uk-container uk-align-center uk-child-width-1-1@s uk-child-width-1-6@l r">
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-bmp-sang-ico/"> BMP sang ICO </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-gif-sang-ico/"> GIF sang ICO </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-image-sang-ico/"> ẢNH sang ICO </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-jfif-sang-ico/"> JFIF sang ICO </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-jpeg-sang-ico/"> JPEG sang ICO </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-jpg-sang-ico/"> JPG sang ICO </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-picture-sang-ico/"> HÌNH ẢNH sang ICO </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-ico/"> PNG sang ICO </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-svg-sang-ico/"> SVG sang ICO </a> </div>
+                        </div>
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-webp-sang-ico/"> WEBP sang ICO </a> </div>
+                        </div>
                     </div>
-                    <div class="uk-card uk-card-hover uk-card-default uk-card-body">
-                        <h4> <a href="/video-converter/"> Video </a> </h4>
-                        <ul class="uk-list uk-list-striped">
-                            <li><a href="/mp4-converter/"> MP4 converter </a></li>
-                            <li><a href="/mov-converter/"> MOV converter </a></li>
-                            <li><a href="/mkv-converter/"> MKV converter </a></li>
-                            <li><a href="/avi-converter/"> AVI converter </a></li>
-                            <li><a href="/flv-converter/"> FLV converter </a></li>
-                        </ul>
-                    </div>
-                    <div class="uk-card uk-card-hover uk-card-default uk-card-body">
-                        <h4> <a href="/ebook-converter/"> eBook </a> </h4>
-                        <ul class="uk-list uk-list-striped">
-                            <li><a href="/epub-converter/"> EPUB converter </a></li>
-                            <li><a href="/mobi-converter/"> MOBI converter </a></li>
-                            <li><a href="/djvu-converter/"> DJVU converter </a></li>
-                            <li><a href="/azw3-converter/"> AZW3 converter </a></li>
-                            <li><a href="/cbr-converter/"> CBR converter </a></li>
-                        </ul>
-                    </div>
-                    <div class="uk-card uk-card-hover uk-card-default uk-card-body">
-                        <h4> <a href="/archive-converter/"> Archive </a> </h4>
-                        <ul class="uk-list uk-list-striped">
-                            <li><a href="/zip-converter/"> ZIP converter </a></li>
-                            <li><a href="/rar-converter/"> RAR converter </a></li>
-                            <li><a href="/7z-converter/"> 7Z converter </a></li>
-                            <li><a href="/tar-converter/"> TAR converter </a></li>
-                            <li><a href="/cbz-converter/"> CBZ converter </a></li>
-                        </ul>
-                    </div>
-                    <div class="uk-card uk-card-hover uk-card-default uk-card-body">
-                        <h4> <a href="/font-converter/"> Font </a> </h4>
-                        <ul class="uk-list uk-list-striped">
-                            <li><a href="/otf-converter/"> OTF converter </a></li>
-                            <li><a href="/ttf-converter/"> TTF converter </a></li>
-                            <li><a href="/woff-converter/"> WOFF converter </a></li>
-                            <li><a href="/dfont-converter/"> DFONT converter </a></li>
-                            <li><a href="/eot-converter/"> EOT converter </a></li>
-                        </ul>
-                    </div>
-                    <div class="uk-card uk-card-hover uk-card-default uk-card-body">
-                        <h4> <a href="/cad-converter/"> CAD </a> </h4>
-                        <ul class="uk-list uk-list-striped">
-                            <li><a href="/dwg-converter/"> DWG converter </a></li>
-                            <li><a href="/dxf-converter/"> DXF converter </a></li>
-                            <li><a href="/dwf-converter/"> DWF converter </a></li>
-                            <li><a href="/dgn-converter/"> DGN converter </a></li>
-                            <li><a href="/scad-converter/"> SCAD converter </a></li>
-                        </ul>
-                    </div>
-                    <div class="uk-card uk-card-hover uk-card-default uk-card-body">
-                        <h4> <a href="/mesh-converter/"> Mesh </a> </h4>
-                        <ul class="uk-list uk-list-striped">
-                            <li><a href="/obj-converter/"> OBJ converter </a></li>
-                            <li><a href="/stl-converter/"> STL converter </a></li>
-                            <li><a href="/fbx-converter/"> FBX converter </a></li>
-                            <li><a href="/dae-converter/"> DAE converter </a></li>
-                            <li><a href="/3ds-converter/"> 3DS converter </a></li>
-                        </ul>
-                    </div> -->
                 </div>
             </div>
         </div>
