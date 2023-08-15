@@ -1,5 +1,13 @@
 <?php
 // require('routes.php')
+$fileFrom = "PNG";
+$fileTo = "TINYPNG";
+$path = str_replace('/',"",$_SERVER['REQUEST_URI']);
+$arr = explode('-', $path);
+if (count($arr) > 0) {
+    $fileFrom = strtoupper($arr[2]);
+    $fileTo = strtoupper($arr[4]);
+}
 
 ?>
 <!DOCTYPE html>
@@ -147,7 +155,7 @@
     </svg>
     <main style="height: auto !important;">
         <br>
-        <h1 style="color: green;">Chuyển PNG sang TinyPNG</h1>
+        <div style="text-align: center;"><h1  class="text-color">Chuyển <?=$fileFrom?> sang <?=$fileTo?></h1></div>
         <div class="uk-card uk-card-default uk-card-hover uk-card-body form-section" style="height: auto !important;">
             <div class="uk-container uk-text-center">
                 <div class="upload-container">
@@ -172,8 +180,8 @@
             <div class="uk-container ">
                 <div class="uk-card uk-card-default uk-card-hover uk-text-center">
                     <div class="uk-card-header">
-                        <h2>Làm cách nào để chuyển đổi PNG sang ICO trực tuyến?</h2>
-                        <div>Hướng dẫn từng bước để chuyển đổi png sang ico bằng AnyConv. Nó hoạt động trên PC (Windows, Mac, Linux) và thiết bị di động (iPhone, Android).</div>
+                        <h2>Làm cách nào để chuyển đổi <?=$fileFrom?> sang <?=$fileTo?> trực tuyến?</h2>
+                        <div>Hướng dẫn từng bước để chuyển đổi <?=$fileFrom?> sang <?=$fileTo?> miễn phí. Nó hoạt động trên PC (Windows, Mac, Linux) và thiết bị di động (iPhone, Android).</div>
                     </div>
                     <div class="uk-card-body uk-padding-small uk-padding-remove-top uk-margin-remove uk-flex uk-child-width-1-3@m content--how-to-convert__steps">
                         <div class="step">
@@ -181,27 +189,27 @@
                                     <use xlink:href="#icon-upload"></use>
                                 </svg> </div>
                             <div class="step--title">
-                                <h3 id="#step-1">Tải lên tệp PNG</h3>
+                                <h3 id="#step-1">Tải lên tệp <?=$fileFrom?></h3>
                             </div>
-                            <div class="step--description">Kéo và thả tệp PNG của bạn vào khu vực tải lên. Kích thước tệp tối đa là 100&nbsp;MB.</div>
+                            <div class="step--description">Kéo và thả tệp <?=$fileFrom?> của bạn vào khu vực tải lên. Kích thước tệp tối đa là 100&nbsp;MB.</div>
                         </div>
                         <div class="step" id="step-2">
                             <div class="uk-margin-remove-adjacent step--img"> <svg class="uk-width-small">
                                     <use xlink:href="#icon-convert"></use>
                                 </svg> </div>
                             <div class="step--title">
-                                <h3>đổi PNG sang ICO</h3>
+                                <h3>đổi <?=$fileFrom?> sang <?=$fileTo?></h3>
                             </div>
-                            <div class="step--description">Nhấp vào "Chuyển đổi" để thay đổi png thành ico. Quá trình chuyển đổi thường mất vài giây.</div>
+                            <div class="step--description">Nhấp vào "Chuyển đổi" để thay đổi <?=$fileFrom?> thành <?=$fileTo?>. Quá trình chuyển đổi thường mất vài giây.</div>
                         </div>
                         <div class="step">
                             <div class="uk-margin-remove-adjacent step--img"> <svg class="uk-width-small">
                                     <use xlink:href="#icon-download"></use>
                                 </svg> </div>
                             <div class="step--title">
-                                <h3 id="#step-3">Tải xuống tệp ICO</h3>
+                                <h3 id="#step-3">Tải xuống tệp <?=$fileTo?></h3>
                             </div>
-                            <div class="step--description">Bây giờ bạn có thể tải xuống tệp ICO. Liên kết tải xuống chỉ hoạt động trên thiết bị của bạn.</div>
+                            <div class="step--description">Bây giờ bạn có thể tải xuống tệp <?=$fileTo?>. Liên kết tải xuống chỉ hoạt động trên thiết bị của bạn.</div>
                         </div>
                     </div>
                 </div>
@@ -210,168 +218,66 @@
         <div class="uk-section-xsmall uk-padding-remove">
             <div class="uk-container">
                 <div class="uk-card uk-card-body ">
-                    <div class="uk-text-left uk-text-large"> <a href="/vi/chuyen-doi-png/"> Chuyển đổi PNG </a> </div>
+                    <div class="uk-text-left uk-text-large">
+                        <h3 class="text-color"> Chuyển đổi PNG </h3>
+                    </div>
                     <div class="uk-container uk-align-center uk-child-width-1-1@s uk-child-width-1-6@l r">
                         <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-7z/"> PNG sang 7Z </a> </div>
+                            <div class="uk-text-center"> <a href="/chuyen-doi-png-sang-tinypng/"> PNG sang TINYPNG </a> </div>
                         </div>
                         <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-ai/"> PNG sang AI </a> </div>
+                            <div class="uk-text-center"> <a href="/chuyen-doi-png-sang-jpg/"> PNG sang JPG </a> </div>
                         </div>
                         <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-avi/"> PNG sang AVI </a> </div>
+                            <div class="uk-text-center"> <a href="/chuyen-doi-png-sang-jpeg/"> PNG sang JPEG </a> </div>
                         </div>
                         <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-bmp/"> PNG sang BMP </a> </div>
+                            <div class="uk-text-center"> <a href="/chuyen-doi-png-sang-pdf/"> PNG sang PDF </a> </div>
                         </div>
                         <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-cur/"> PNG sang CUR </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-dds/"> PNG sang DDS </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-doc/"> PNG sang DOC </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-docx/"> PNG sang DOCX </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-dxf/"> PNG sang DXF </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-emf/"> PNG sang EMF </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-eps/"> PNG sang EPS </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-epub/"> PNG sang EPUB </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-gif/"> PNG sang GIF </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-hdr/"> PNG sang HDR </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-html/"> PNG sang HTML </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-icns/"> PNG sang ICNS </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-ico/"> PNG sang ICO </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-jpeg/"> PNG sang JPEG </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-jpg/"> PNG sang JPG </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-mov/"> PNG sang MOV </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-mp4/"> PNG sang MP4 </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-mpeg/"> PNG sang MPEG </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-obj/"> PNG sang OBJ </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-pcx/"> PNG sang PCX </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-pdf/"> PNG sang PDF </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-pgm/"> PNG sang PGM </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-ppm/"> PNG sang PPM </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-ps/"> PNG sang PS </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-psd/"> PNG sang PSD </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-rar/"> PNG sang RAR </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-raw/"> PNG sang RAW </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-rgb/"> PNG sang RGB </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-stl/"> PNG sang STL </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-svg/"> PNG sang SVG </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-tga/"> PNG sang TGA </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-tif/"> PNG sang TIF </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-tiff/"> PNG sang TIFF </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-webp/"> PNG sang WEBP </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-wmf/"> PNG sang WMF </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-xpm/"> PNG sang XPM </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-zip/"> PNG sang ZIP </a> </div>
+                            <div class="uk-text-center"> <a href="/chuyen-doi-png-sang-ico/"> PNG sang ICO </a> </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="uk-container">
                 <div class="uk-card uk-card-body ">
-                    <div class="uk-text-left uk-text-large"> <a href="/vi/chuyen-doi-ico/"> Chuyển đổi sang ICO </a> </div>
+                    <div class="uk-text-left uk-text-large">
+                        <h3 class="text-color"> Chuyển đổi JPG </h3>
+                    </div>
                     <div class="uk-container uk-align-center uk-child-width-1-1@s uk-child-width-1-6@l r">
                         <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-bmp-sang-ico/"> BMP sang ICO </a> </div>
+                            <div class="uk-text-center"> <a href="/chuyen-doi-jpg-sang-tinypng/"> JPG sang TINYPNG </a> </div>
                         </div>
                         <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-gif-sang-ico/"> GIF sang ICO </a> </div>
+                            <div class="uk-text-center"> <a href="/chuyen-doi-jpg-sang-png/"> JPG sang PNG </a> </div>
                         </div>
                         <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-image-sang-ico/"> ẢNH sang ICO </a> </div>
+                            <div class="uk-text-center"> <a href="/chuyen-doi-jpg-sang-pdf/"> JPG sang PDF </a> </div>
                         </div>
                         <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-jfif-sang-ico/"> JFIF sang ICO </a> </div>
+                            <div class="uk-text-center"> <a href="/chuyen-doi-jpg-sang-ico/"> JPG sang ICO </a> </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="uk-container">
+                <div class="uk-card uk-card-body ">
+                    <div class="uk-text-left uk-text-large">
+                        <h3 class="text-color"> Chuyển đổi JPEG </h3>
+                    </div>
+                    <div class="uk-container uk-align-center uk-child-width-1-1@s uk-child-width-1-6@l r">
+                        <div class="uk-button">
+                            <div class="uk-text-center"> <a href="/chuyen-doi-jpeg-sang-ico/"> JPEG sang PNG </a> </div>
                         </div>
                         <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-jpeg-sang-ico/"> JPEG sang ICO </a> </div>
+                            <div class="uk-text-center"> <a href="/chuyen-doi-jpeg-sang-ico/"> JPEG sang PDF </a> </div>
                         </div>
                         <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-jpg-sang-ico/"> JPG sang ICO </a> </div>
+                            <div class="uk-text-center"> <a href="/chuyen-doi-jpeg-sang-ico/"> JPEG sang ICO </a> </div>
                         </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-picture-sang-ico/"> HÌNH ẢNH sang ICO </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-png-sang-ico/"> PNG sang ICO </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-svg-sang-ico/"> SVG sang ICO </a> </div>
-                        </div>
-                        <div class="uk-button">
-                            <div class="uk-text-center"> <a href="/vi/chuyen-doi-webp-sang-ico/"> WEBP sang ICO </a> </div>
-                        </div>
+
                     </div>
                 </div>
             </div>

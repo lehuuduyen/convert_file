@@ -1,42 +1,59 @@
 <?php
 
 if (isset($_POST)) {
-    function rrmdir($src)
+    function getSize($image)
     {
-        $dir = opendir($src);
-        while (false !== ($file = readdir($dir))) {
-            if (($file != '.') && ($file != '..')) {
-                $full = $src . '/' . $file;
-                if (is_dir($full)) {
-                    rrmdir($full);
-                } else {
-                    unlink($full);
-                }
-            }
-        }
-        closedir($dir);
-        rmdir($src);
+        return number_format((int)filesize($image) / 1024, 2, '.', '') . 'KB';
     }
-    function compress($source, $destination, $quality)
+    function getObjectSize($image,$imageName){
+        $result['oldSize'] = getSize($image);
+        // $result['newSize'] = getSize('file/compress_' . $imageName);
+        $result['newSize'] = getSize( $imageName);
+        return $result;
+    }
+    function resizeImage($image, $imageName, $outputQuality)
     {
+        try {
+            //code...
+            $result = [];
 
-        $info = getimagesize($source);
+            $imageInfo = getimagesize($image);
 
-        if ($info['mime'] == 'image/jpeg')
-            $image = imagecreatefromjpeg($source);
 
-        elseif ($info['mime'] == 'image/gif')
-            $image = imagecreatefromgif($source);
+            $result['oldSize'] = getSize($image);
+            $result['mime'] = $imageInfo['mime'];
 
-        elseif ($info['mime'] == 'image/png')
-            $image = imagecreatefrompng($source);
 
-        imagejpeg($image, $destination, $quality);
+            if ($imageInfo['mime'] == 'image/gif') {
 
-        return $destination;
+                $imageLayer = imagecreatefromgif($image);
+            } elseif ($imageInfo['mime'] == 'image/jpeg') {
+
+                $imageLayer = imagecreatefromjpeg($image);
+            } elseif ($imageInfo['mime'] == 'image/png') {
+
+                $imageLayer = imagecreatefrompng($image);
+            }
+
+            $compressedImage = imagejpeg($imageLayer, 'file/compress_' . $imageName, $outputQuality);
+
+
+            if ($compressedImage) {
+                $result['newSize'] = getSize('file/compress_' . $imageName);
+                $result['percent'] = '-'.number_format(100 - ((int)$result['newSize'] * 100 / (int)$result['oldSize']), 2, '.', '') . "%";
+                return $result;
+                exit;
+            } else {
+                return 'An error occured!';
+                exit;
+            }
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
     function urlPathFile()
     {
+        
         if (isset($_SERVER['HTTPS'])) {
             $protocol = ($_SERVER['HTTPS'] && $_SERVER['HTTPS'] != "off") ? "https" : "http";
         } else {
@@ -50,22 +67,16 @@ if (isset($_POST)) {
             throw new \ErrorException($message, 0, $severity, $file, $line);
         });
         $file = $_FILES["file"];
+        $file['name'] = time()."_".rand(1,9999)."_".$file['name'];
         $tempFilePath = $file['tmp_name'];
         $to = $_POST['to'];
         $targetDirectory = './file/';
-        $currentFloderDomain = './file/';
-        if (is_dir($targetDirectory)) {
-            chmod($targetDirectory, 0777);
-            rrmdir($targetDirectory);
-        }
+        $currentFloderDomain = 'file/';
+     
         if (!is_dir($targetDirectory)) {
             mkdir($targetDirectory, 0777, true);
         }
-        if ($file['type'] == "image/jpeg" || $file['type'] == "image/jpg") {
-            if (mime_content_type($tempFilePath) != "image/jpeg") {
-                echo json_encode(array("error" => "Failed to load the JPEG/JPG image."));
-                exit;
-            }
+        if (mime_content_type($tempFilePath) == "image/jpeg") {
             switch ($to) {
                 case "png":
                     $output = str_replace([".jpg", ".jpeg"], "", $file['name']) . ".png";
@@ -83,8 +94,8 @@ if (isset($_POST)) {
                     // Clean up memory
                     imagedestroy($jpegImage);
                     imagedestroy($pngImage);
-
-                    echo json_encode(array("success" => true, "message" => urlPathFile() . $output));
+                    $result = getObjectSize($tempFilePath,'file/' . $output);
+                    echo json_encode(array("success" => true, "message" => urlPathFile() . $output, 'data' => json_encode($result)));
                     break;
                 case 'gif':
                     $outputGif = str_replace([".jpg", ".jpeg"], "", $file['name']) . ".gif";
@@ -99,8 +110,9 @@ if (isset($_POST)) {
                     imagegif($gifImage, $gifFilePath);
                     imagedestroy($jpegImage);
                     imagedestroy($gifImage);
-                    echo json_encode(array("success" => true, "message" => urlPathFile() . $output));
-                    // echo $gifFilePath;
+                    $result = getObjectSize($tempFilePath,'file/' . $outputGif);
+
+                    echo json_encode(array("success" => true, "message" => urlPathFile() . $outputGif, 'data' => json_encode($result)));                    // echo $gifFilePath;
                     break;
                 case 'pdf':
                     require('fpdf/fpdf.php');
@@ -116,17 +128,26 @@ if (isset($_POST)) {
                     $pdf->Image($jpegFilePath, 10, 10, 190, 0, 'JPEG');
 
                     $pdf->Output($pdfFilePath, 'F');
-                    echo json_encode(array("success" => true, "message" => urlPathFile() . $output));
+                    $result = getObjectSize($tempFilePath,'file/' . $output);
+
+                    echo json_encode(array("success" => true, "message" => urlPathFile() . $output, 'data' => json_encode($result)));
                     break;
                 case 'jpg':
                     $outputJpg = $currentFloderDomain . str_replace(".jpeg", "", $file['name']) . ".jpg";
                     rename($tempFilePath, $outputJpg);
-                    echo json_encode(array("success" => true, "message" => urlPathFile() . $output));
+                   
+                    $result = getObjectSize($tempFilePath, $outputJpg);
+
+                    echo json_encode(array("success" => true, "message" => urlPathFile() . $outputJpg));
                     break;
                 case 'jpeg':
                     $outputJpeg = $currentFloderDomain . str_replace(".jpg", "", $file['name']) . ".jpeg";
                     rename($tempFilePath, $outputJpeg);
-                    echo json_encode(array("success" => true, "message" => urlPathFile() . $output));
+                 
+                    
+                    $result = getObjectSize($tempFilePath, $outputJpeg);
+
+                    echo json_encode(array("success" => true, "message" => urlPathFile() . $outputJpeg, 'data' => json_encode($result)));
                     break;
                 case "ico":
                     require('php-ico/class-php-ico.php');
@@ -134,23 +155,24 @@ if (isset($_POST)) {
                     $tempIcoFilePath =  $currentFloderDomain . $output;
                     $ico_lib = new PHP_ICO($tempFilePath);
                     $ico_lib->save_ico($tempIcoFilePath);
-                    echo json_encode(array("success" => true, "message" => urlPathFile() . $output));
+                    $result = getObjectSize($tempFilePath, 'file/' .$output);
+                    
+                    echo json_encode(array("success" => true, "message" => urlPathFile() . $output, 'data' => json_encode($result)));
                     break;
                 case "tinyPNG":
-                    $source_img = $tempFilePath;
-                    $destination_img = $source_img;
+                    $sourceImg = $tempFilePath;
+                    $fileName = $file['name'];
 
-                    $d = compress($source_img, $destination_img, 50);
-                    echo json_encode(array("success" => true, "message" => urlPathFile() . $destination_img));
+                    $d = resizeImage($sourceImg, $fileName, 50);
+
+
+                    echo json_encode(array("success" => true, "message" => urlPathFile() . 'compress_' . $fileName, 'data' => json_encode($d)));
                     break;
                 default:
                     echo json_encode(array("error" => "Failed to load file."));
             }
-        } else if ($file['type'] == "image/png") {
-            if (mime_content_type($tempFilePath) != "image/png") {
-                echo json_encode(array("error" => "Failed to load the PNG image."));
-                exit;
-            }
+        } else if (mime_content_type($tempFilePath) == "image/png") {
+
             switch ($to) {
                 case "jpeg":
                     $output = str_replace(".png", "", $file['name']) . ".jpeg";
@@ -168,7 +190,9 @@ if (isset($_POST)) {
 
                     imagedestroy($pngImage);
                     imagedestroy($jpegImage);
-                    echo json_encode(array("success" => true, "message" => urlPathFile() . $output));
+                    $result = getObjectSize($tempFilePath, 'file/' .$output);
+
+                    echo json_encode(array("success" => true, "message" => urlPathFile() . $output, 'data' => json_encode($result)));
                     break;
                 case "jpg":
                     $output = str_replace(".png", "", $file['name']) . ".jpg";
@@ -186,7 +210,9 @@ if (isset($_POST)) {
 
                     imagedestroy($pngImage);
                     imagedestroy($jpegImage);
-                    echo json_encode(array("success" => true, "message" => urlPathFile() . $output));
+                    $result = getObjectSize($tempFilePath, 'file/' .$output);
+
+                    echo json_encode(array("success" => true, "message" => urlPathFile() . $output, 'data' => json_encode($result)));
                     break;
                 case 'pdf':
                     require('fpdf/fpdf.php');
@@ -201,7 +227,9 @@ if (isset($_POST)) {
                     $pdf->Image($pngFilePath, 10, 10, 190, 0, 'PNG');
 
                     $pdf->Output($pdfFilePath, 'F');
-                    echo json_encode(array("success" => true, "message" => urlPathFile() . $output));
+                    $result = getObjectSize($tempFilePath, 'file/' .$output);
+
+                    echo json_encode(array("success" => true, "message" => urlPathFile() . $output, 'data' => json_encode($result)));
                     break;
                 case "ico":
                     require('php-ico/class-php-ico.php');
@@ -209,14 +237,17 @@ if (isset($_POST)) {
                     $tempIcoFilePath =  $currentFloderDomain . $output;
                     $ico_lib = new PHP_ICO($tempFilePath);
                     $ico_lib->save_ico($tempIcoFilePath);
-                    echo json_encode(array("success" => true, "message" => urlPathFile() . $output));
+                    $result = getObjectSize($tempFilePath, 'file/' .$output);
+                    echo json_encode(array("success" => true, "message" => urlPathFile() . $output, 'data' => json_encode($result)));
                     break;
                 case "tinyPNG":
-                    $source_img = $tempFilePath;
-                    $destination_img = $source_img;
+                    $sourceImg = $tempFilePath;
+                    $fileName = $file['name'];
 
-                    $d = compress($source_img, $destination_img, 50);
-                    echo json_encode(array("success" => true, "message" => urlPathFile() . $destination_img));
+                    $d = resizeImage($sourceImg, $fileName, 50);
+
+
+                    echo json_encode(array("success" => true, "message" => urlPathFile() . 'compress_' . $fileName, 'data' => json_encode($d)));
                     break;
                 default:
                     echo json_encode(array("error" => "Failed to load file."));

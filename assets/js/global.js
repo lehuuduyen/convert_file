@@ -71,16 +71,22 @@ jQuery(document).ready(function () {
                                 <div class="file-size">${fileSizeInKB.toFixed(1)} KB</div>
                             </div>
                             <div class="file-name">${item.name}</div>
+                            <div id="old_size" style="display: none;color:#7eb631"></div>
+
                             <div>sang</div>
-                            <div id="downloadLinkContainer" style="display: none;"></div>
                             <div class="file-format-to">
                                 <div class="form-group search">
-                                    <select class="selectpicker select-search-box" data-live-search="true" style="display: none;">
+                                    <select class=" selectpicker select-search-box" data-live-search="true" style="display: none;">
                                         ${getListOptionConverter(listConvertByFile, dataType)}
                                     </select>
                                 </div>
                                 
                             </div>
+                            <div id="new_size" style="display: none;color:#7eb631"></div>
+
+                            <div id="downloadLinkContainer" style="display: none"></div>
+                            <div id="percent" style="display: none;color:#7eb631"></div>
+
                             <div class="file-delete">
                                 <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 12 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48L7.48 8z"></path>
@@ -144,7 +150,7 @@ jQuery(document).ready(function () {
                     "contentType": false,
                     "data": formDataPost,
                     beforeSend: function () {
-                        jQuery(".file #downloadLinkContainer").eq(index).html(`<p>...Loading</p>`);
+                        jQuery(".file #downloadLinkContainer").eq(index).html(`<img style="height:150px" src="./assets/img/loading.gif">`);
                         jQuery(".file #downloadLinkContainer").eq(index).show();
                     },
                 };
@@ -153,14 +159,26 @@ jQuery(document).ready(function () {
                     if (result.error) {
                         jQuery(".file #downloadLinkContainer").eq(index).html(`<p class="text-danger">${result.error}</p>`);
                         jQuery(".file #downloadLinkContainer").eq(index).show();
-                        jQuery(".file .file-format-to:not([style*='display: none']").eq(index).hide();
+                        // jQuery(".file .file-format-to:not([style*='display: none']").eq(index).hide();
                     } else {
                         jQuery(".file #downloadLinkContainer").eq(index).hide();
                         var filename = result.message.substring(result.message.lastIndexOf("/") + 1);
                         // Append the link and trigger the download
                         jQuery(".file #downloadLinkContainer").eq(index).html(`<a href="${result.message}" download='${filename}''>Download</a>`);
                         jQuery(".file #downloadLinkContainer").eq(index).show();
-                        jQuery(".file .file-format-to").eq(index).hide();
+                        let data = jQuery.parseJSON(result.data)
+                        jQuery(".file #old_size").eq(index).html(data.oldSize);
+                        jQuery(".file #new_size").eq(index).html(data.newSize);
+                        jQuery(".file #old_size").eq(index).show();
+                        jQuery(".file #new_size").eq(index).show();
+                        if(typeof data.percent != "undefined"){
+                            jQuery(".file #percent").eq(index).html(data.percent);
+                            jQuery(".file #percent").eq(index).show();
+                        }else{
+                            jQuery(".file #percent").eq(index).hide();
+
+                        }
+                        // jQuery(".file .file-format-to").eq(index).hide();
                     }
                 });
             });

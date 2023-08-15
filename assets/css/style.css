@@ -6,9 +6,22 @@ body main {
     padding-top: 20px;
     padding-bottom: 20px
 }
-
+.text-color{
+    background:  linear-gradient(90deg, rgba(240,27,27,1) 25%, rgba(205,173,107,1) 70%, rgba(85,189,160,1) 74%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
 .uk-text-center {
     text-align: center !important;
+}
+.btn-light {
+    /* display:block; */
+    /* width:100%; */
+    height: 50px;
+    padding: 0 20px !important;
+    background: white !important;
+    box-shadow: 0 7px 14px 0 rgba(50,50,93,.1), 0 3px 6px 0 rgba(0,0,0,.07);
 }
 
 div {
