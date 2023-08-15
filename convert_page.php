@@ -3,11 +3,14 @@
 $fileFrom = "PNG";
 $fileTo = "TINYPNG";
 $path = str_replace('/',"",$_SERVER['REQUEST_URI']);
-$arr = explode('-', $path);
-if (count($arr) > 0) {
-    $fileFrom = strtoupper($arr[2]);
-    $fileTo = strtoupper($arr[4]);
+if($path !=""){
+    $arr = explode('-', $path);
+    if (count($arr) > 0) {
+        $fileFrom = strtoupper($arr[2]);
+        $fileTo = strtoupper($arr[4]);
+    }
 }
+
 
 ?>
 <!DOCTYPE html>
