@@ -157,7 +157,7 @@ jQuery(document).ready(function () {
                 jQuery.ajax(settingsUploadConvert).done(function (response, status, xhr) {
                     var result = jQuery.parseJSON(response)
                     if (result.error) {
-                        jQuery(".file #downloadLinkContainer").eq(index).html(`<p class="text-danger">${result.error}</p>`);
+                        jQuery(".file #downloadLinkContainer").eq(index).html(`<p class="text-danger" style="margin-top: 20px;">${result.error}</p>`);
                         jQuery(".file #downloadLinkContainer").eq(index).show();
                         // jQuery(".file .file-format-to:not([style*='display: none']").eq(index).hide();
                     } else {

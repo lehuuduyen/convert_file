@@ -169,7 +169,7 @@ if (isset($_POST)) {
                     echo json_encode(array("success" => true, "message" => urlPathFile() . 'compress_' . $fileName, 'data' => json_encode($d)));
                     break;
                 default:
-                    echo json_encode(array("error" => "Failed to load file."));
+                    echo json_encode(array("error" => "File không đúng định dạng."));
             }
         } else if (mime_content_type($tempFilePath) == "image/png") {
 
@@ -250,15 +250,15 @@ if (isset($_POST)) {
                     echo json_encode(array("success" => true, "message" => urlPathFile() . 'compress_' . $fileName, 'data' => json_encode($d)));
                     break;
                 default:
-                    echo json_encode(array("error" => "Failed to load file."));
+                    echo json_encode(array("error" => "File không đúng định dạng, hãy thử file khác."));
             }
         }
     } catch (Exception $e) {
-        echo '<pre>';
-        print_r($e);
-        die;
+        // echo '<pre>';
+        // print_r($e);
+        // die;
 
-        echo json_encode(array("error" => "Failed to load convert. Please try again."));
+        echo json_encode(array("error" => "File không đúng định dạng, hãy thử file khác."));
     } finally {
         restore_error_handler();
     }
