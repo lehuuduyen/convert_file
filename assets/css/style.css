@@ -29,7 +29,7 @@ div {
 }
 
 .upload-container {
-    max-width: 90%;
+    max-width: 100%;
     display: block;
     margin-right: auto;
     margin-left: auto;
@@ -155,7 +155,7 @@ div {
 }
 
 .file .file-name {
-    width: 200px;
+    width: 100px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap
